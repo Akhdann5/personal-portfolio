@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaza Fathya Akhdan</title>
+    <link rel="icon" href="../assets/img/scnd-logo.png" type="image/png">
+    <link href="../src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ── Mobile overlay menu ── */
+        #mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-12px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        #mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+        #mobile-menu .menu-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #mobile-menu .menu-top img { width: 3rem; }
+        #menu-close {
+            background: none;
+            border: 1.5px solid #1f2937;
+            cursor: pointer;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s, color 0.2s;
+        }
+        #menu-close:hover { background: #1f2937; color: white; }
+        #menu-close svg { width: 1rem; height: 1rem; stroke: currentColor; stroke-width: 2; }
+        #mobile-menu nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            flex: 1;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+        #mobile-menu nav a {
+            font-family: 'applegaramond', Georgia, serif;
+            font-size: clamp(2.8rem, 12vw, 5rem);
+            font-weight: 400;
+            color: #1f2937;
+            text-decoration: none;
+            line-height: 1.15;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0.6rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color 0.2s, padding-left 0.2s;
+        }
+        #mobile-menu nav a:first-child { border-top: 1px solid #e5e7eb; }
+        #mobile-menu nav a:hover { color: #9ca3af; padding-left: 0.5rem; }
+        #mobile-menu nav a .arrow {
+            font-size: 1.2rem;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        #mobile-menu nav a:hover .arrow { opacity: 1; transform: translateX(0); }
+        #mobile-menu .menu-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #mobile-menu .menu-bottom .socials { display: flex; gap: 0.75rem; }
+        #mobile-menu .menu-bottom .socials a {
+            width: 2.4rem;
+            height: 2.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1.5px solid #1f2937;
+            color: #1f2937;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        #mobile-menu .menu-bottom .socials a:hover { background: #1f2937; color: white; }
+        #mobile-menu .menu-bottom .label {
+            font-family: sans-serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            color: #9ca3af;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ── Hamburger ── */
+        #hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 60;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        #hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: black;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        @media (max-width: 767px) {
+            #hamburger { display: flex; }
+        }
+
+        /* ── Contact form inputs ── */
+        input::placeholder,
+        textarea::placeholder {
+            color: #9ca3af;
+            font-weight: 300;
+        }
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-bottom-color: #1f2937;
+        }
+        .contact-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #e5e7eb;
+            width: 100%;
+            padding: 12px 0;
+            font-size: 1rem;
+            font-family: sans-serif;
+            font-weight: 300;
+            color: #1f2937;
+            transition: border-color 0.3s ease;
+        }
+
+        /* ── Footer responsive ── */
+        @media (max-width: 767px) {
+            .footer-social { width: auto !important; gap: 1rem; }
+            .footer-bottom { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+            .footer-credit { margin-top: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav class="flex items-center justify-between px-6 md:px-30 py-8 w-full bg-white relative z-40" id="home">
+        <div>
+            <img src="../assets/img/logo.png" alt="Logo" class="w-14">
+        </div>
+        <div class="hidden md:flex space-x-6 font-sans font-light text-xl tracking-tight">
+            <a href="../index.html" class="text-black hover:text-gray-500 transition">home</a>
+            <a href="about.html" class="text-black hover:text-gray-500 transition">about</a>
+            <a href="work.html" class="text-black hover:text-gray-500 transition">work</a>
+            <a href="contact.html" class="text-black border-b-2 border-black hover:text-gray-500 hover:border-gray-500 transition">contact</a>
+            <a href="https://instagram.com/gf.akhdan" target="_blank" rel="noopener noreferrer" class="text-black hover:text-gray-500 transition"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank" rel="noopener noreferrer" class="text-black hover:text-gray-500 transition"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+        <button id="hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu">
+        <div class="menu-top">
+            <img src="../assets/img/logo.png" alt="Logo">
+            <button id="menu-close" aria-label="Close menu">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav>
+            <a href="../index.html">home <span class="arrow">→</span></a>
+            <a href="about.html">about <span class="arrow">→</span></a>
+            <a href="work.html">work <span class="arrow">→</span></a>
+            <a href="contact.html">contact <span class="arrow">→</span></a>
+        </nav>
+        <div class="menu-bottom">
+            <div class="socials">
+                <a href="https://instagram.com/gf.akhdan" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+            <span class="label">© 2026 Gaza Fathya Akhdan</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="relative overflow-hidden mb-12 md:mb-20">
+        <video id="bg-video" class="absolute inset-0 w-full h-full object-cover brightness-100" autoplay muted loop playsinline>
+            <source src="../assets/video/videobg-1.mp4" type="video/mp4">
+        </video>
+        <div class="absolute h-32 w-screen overflow-hidden">
+            <div class="absolute inset-0 bg-linear-to-b from-white/95 to-transparent"></div>
+        </div>
+        <div class="absolute h-32 w-screen overflow-hidden bottom-0">
+            <div class="absolute inset-0 bg-linear-to-t from-white/99 to-transparent"></div>
+        </div>
+
+        <div class="relative flex flex-col px-6 md:px-72 py-20 md:py-44 text-black">
+            <div class="w-full md:w-1/2 space-y-3" data-aos="fade-up" data-aos-duration="2000">
+                <p class="font-[applegaramond] text-xl md:text-2xl text-left">Get In Touch</p>
+                <p class="font-[applegaramond] text-3xl md:text-5xl text-left">Have a project in mind? Let's build something great together.</p>
+            </div>
+            <div class="w-full md:w-1/2 md:ml-auto mt-10 md:mt-24" data-aos="fade-up" data-aos-delay="200" data-aos-duration="2000">
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-base md:text-lg">Whether you're looking for a collaborator, have a freelance opportunity, or just want to say hello — my inbox is always open.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTACT SECTION -->
+    <section class="px-6 md:px-72 py-6 md:py-10 mb-12 md:mb-20">
+
+        <!-- Mobile: stacked layout | Desktop: 2-column grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-24">
+
+            <!-- Contact Info -->
+            <div data-aos="fade-up" data-aos-duration="2000">
+                <h2 class="font-[applegaramond] font-light text-3xl md:text-4xl tracking-tight mb-8 md:mb-10">Contact Info</h2>
+
+                <div class="space-y-6 md:space-y-8">
+                    <!-- Email -->
+                    <div class="border-t border-gray-200 pt-6 md:pt-8">
+                        <p class="font-sans font-light text-xs text-gray-400 uppercase tracking-widest mb-2">Email</p>
+                        <a href="mailto:gazaaaa6@gmail.com" class="font-sans font-light text-gray-800 text-base md:text-lg hover:text-gray-500 transition">gazaaaa6@gmail.com</a>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="border-t border-gray-200 pt-6 md:pt-8">
+                        <p class="font-sans font-light text-xs text-gray-400 uppercase tracking-widest mb-2">WhatsApp</p>
+                        <a href="https://wa.me/6281298104127" target="_blank" class="font-sans font-light text-gray-800 text-base md:text-lg hover:text-gray-500 transition">+62 812-9810-4127</a>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="border-t border-gray-200 pt-6 md:pt-8">
+                        <p class="font-sans font-light text-xs text-gray-400 uppercase tracking-widest mb-2">Location</p>
+                        <p class="font-sans font-light text-gray-800 text-base md:text-lg">Bekasi, Indonesia</p>
+                    </div>
+
+                    <!-- Socials -->
+                    <div class="border-t border-gray-200 pt-6 md:pt-8">
+                        <p class="font-sans font-light text-xs text-gray-400 uppercase tracking-widest mb-4">Socials</p>
+                        <div class="flex gap-3 md:gap-4">
+                            <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank"
+                               class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-lg md:text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                                <i class="fa-brands fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/Akhdann5" target="_blank"
+                               class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-lg md:text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                            <a href="https://instagram.com/gf.akhdan" target="_blank"
+                               class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-lg md:text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="https://wa.me/6281298104127" target="_blank"
+                               class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-lg md:text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="2000">
+                <h2 class="font-[applegaramond] font-light text-3xl md:text-4xl tracking-tight mb-8 md:mb-10">Send a Message</h2>
+
+                <form id="contactForm" class="space-y-6 md:space-y-8" onsubmit="handleSubmit(event)">
+                    <div>
+                        <label class="font-sans font-light text-xs text-gray-400 uppercase tracking-widest block mb-1">Full Name</label>
+                        <input type="text" name="name" placeholder="Your name" required class="contact-input">
+                    </div>
+
+                    <div>
+                        <label class="font-sans font-light text-xs text-gray-400 uppercase tracking-widest block mb-1">Email Address</label>
+                        <input type="email" name="email" placeholder="your@email.com" required class="contact-input">
+                    </div>
+
+                    <div>
+                        <label class="font-sans font-light text-xs text-gray-400 uppercase tracking-widest block mb-1">Subject</label>
+                        <input type="text" name="subject" placeholder="What's this about?" class="contact-input">
+                    </div>
+
+                    <div>
+                        <label class="font-sans font-light text-xs text-gray-400 uppercase tracking-widest block mb-1">Message</label>
+                        <textarea name="message" rows="5" placeholder="Tell me about your project..." required class="contact-input resize-none"></textarea>
+                    </div>
+
+                    <div class="pt-2 md:pt-4">
+                        <button type="submit"
+                            class="flex items-center gap-3 font-sans font-light text-sm border border-gray-800 rounded-full px-8 py-3 hover:bg-gray-800 hover:text-white transition duration-200 group">
+                            Send Message
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform duration-200"></i>
+                        </button>
+                    </div>
+
+                    <div id="successMsg" class="hidden">
+                        <p class="font-sans font-light text-green-600 text-sm">Thanks for reaching out! I'll get back to you soon.</p>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="px-6 md:px-30 py-8 w-full bg-white mt-12 md:mt-16">
+        <div class="flex justify-between font-medium h-fit items-center">
+            <p class="text-gray-800 font-sans text-xl">© 2026.</p>
+            <a href="#home" class="flex items-center gap-3 md:gap-5 font-sans text-sm md:text-md text-gray-800">
+                BACK TO TOP
+                <div class="px-3.5 py-4 md:px-4.5 md:py-5 flex justify-center bg-gray-800 rounded-full text-white text-lg md:text-xl hover:bg-gray-400 transition duration-200">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="font-medium h-fit mt-20 md:mt-40 overflow-hidden">
+            <p class="text-gray-800 font-sans text-base md:text-xl mt-4 lowercase tracking-tight">Excited to connect and collaborate!</p>
+            <h1 class="font-[applegaramond] text-gray-300 whitespace-nowrap leading-none"
+                style="font-size: clamp(3rem, 14.5vw, 25rem); letter-spacing: 0.04em;">LET'S TALK</h1>
+        </div>
+
+        <div class="footer-bottom flex justify-between mt-10 md:mt-24 mb-10">
+            <div class="footer-social flex gap-4 md:w-1/5 md:justify-between">
+                <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/Akhdann5" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://wa.me/6281298104127" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="footer-credit font-medium h-fit md:mt-10">
+                <p class="text-sm md:text-md font-sans tracking-tight text-gray-800"><span class="text-gray-400">designed and developed by</span> Gaza Fathya Akhdan</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuClose = document.getElementById('menu-close');
+
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        mobileMenu.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const form = document.getElementById('contactForm');
+            const successMsg = document.getElementById('successMsg');
+
+            const name = form.name.value;
+            const email = form.email.value;
+            const subject = form.subject.value || 'Contact from Portfolio';
+            const message = form.message.value;
+
+            const mailtoLink = `mailto:gazaaaa6@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
+            window.location.href = mailtoLink;
+
+            successMsg.classList.remove('hidden');
+            form.reset();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaza Fathya Akhdan</title>
+    <link rel="icon" href="assets/img/scnd-logo.png" type="image/png">
+    <link href="src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ── Mobile overlay menu ── */
+        #mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+            /* hidden state */
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-12px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        #mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+ 
+        /* top bar inside menu */
+        #mobile-menu .menu-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #mobile-menu .menu-top img {
+            width: 3rem;
+        }
+        /* close "×" button */
+        #menu-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1.5px solid #1f2937;
+            transition: background 0.2s, color 0.2s;
+        }
+        #menu-close:hover {
+            background: #1f2937;
+            color: white;
+        }
+        #menu-close svg {
+            width: 1rem;
+            height: 1rem;
+            stroke: currentColor;
+            stroke-width: 2;
+        }
+ 
+        /* nav links */
+        #mobile-menu nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            flex: 1;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+        #mobile-menu nav a {
+            font-family: 'applegaramond', Georgia, serif;
+            font-size: clamp(2.8rem, 12vw, 5rem);
+            font-weight: 400;
+            color: #1f2937;
+            text-decoration: none;
+            line-height: 1.15;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0.6rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color 0.2s, padding-left 0.2s;
+        }
+        #mobile-menu nav a:first-child {
+            border-top: 1px solid #e5e7eb;
+        }
+        #mobile-menu nav a:hover {
+            color: #9ca3af;
+            padding-left: 0.5rem;
+        }
+        #mobile-menu nav a .arrow {
+            font-size: 1.2rem;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        #mobile-menu nav a:hover .arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+ 
+        /* bottom row: socials + label */
+        #mobile-menu .menu-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #mobile-menu .menu-bottom .socials {
+            display: flex;
+            gap: 0.75rem;
+        }
+        #mobile-menu .menu-bottom .socials a {
+            width: 2.4rem;
+            height: 2.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1.5px solid #1f2937;
+            color: #1f2937;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        #mobile-menu .menu-bottom .socials a:hover {
+            background: #1f2937;
+            color: white;
+        }
+        #mobile-menu .menu-bottom .label {
+            font-family: sans-serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            color: #9ca3af;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+ 
+        /* ── Hamburger button ── */
+        #hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 60;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        #hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: black;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+ 
+        @media (max-width: 767px) {
+            #hamburger { display: flex; }
+        }
+ 
+        /* ── Footer responsive ── */
+        @media (max-width: 767px) {
+            .footer-social { width: auto !important; gap: 1rem; }
+            .footer-bottom { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+            .footer-credit { margin-top: 0 !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav class="flex items-center justify-between px-6 md:px-30 py-8 w-full bg-white relative z-40" id="home">
+        <div>
+            <img src="assets/img/logo.png" alt="Logo" class="w-14">
+        </div>
+ 
+        <!-- Desktop nav -->
+        <div class="hidden md:flex space-x-6 font-sans font-light text-xl tracking-tight">
+            <a href="index.html" class="text-black border-b-2 border-black hover:text-gray-500 hover:border-gray-500 transition">home</a>
+            <a href="dist/about.html" class="text-black hover:text-gray-500 transition">about</a>
+            <a href="dist/work.html" class="text-black hover:text-gray-500 transition">work</a>
+            <a href="dist/contact.html" class="text-black hover:text-gray-500 transition">contact</a>
+            <a href="https://instagram.com/gf.akhdan" target="_blank" rel="noopener noreferrer" class="text-black hover:text-gray-500 transition"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank" rel="noopener noreferrer" class="text-black hover:text-gray-500 transition"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+ 
+        <!-- Hamburger button -->
+        <button id="hamburger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+ 
+    <!-- Mobile full-screen menu -->
+    <div id="mobile-menu">
+        <div class="menu-top">
+            <img src="assets/img/logo.png" alt="Logo">
+            <button id="menu-close" aria-label="Close menu">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+ 
+        <nav>
+            <a href="index.html">home <span class="arrow">→</span></a>
+            <a href="dist/about.html">about <span class="arrow">→</span></a>
+            <a href="dist/work.html">work <span class="arrow">→</span></a>
+            <a href="dist/contact.html">contact <span class="arrow">→</span></a>
+        </nav>
+ 
+        <div class="menu-bottom">
+            <div class="socials">
+                <a href="https://instagram.com/gf.akhdan" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+            <span class="label">© 2026 Gaza Fathya Akhdan</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="relative overflow-hidden mb-12 md:mb-20">
+        <!-- Background Video -->
+        <video id="bg-video" class="absolute inset-0 w-full h-full object-cover brightness-110" autoplay muted loop playsinline>
+            <source src="assets/video/videobg-2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="absolute h-32 w-screen overflow-hidden">
+            <div class="absolute inset-0 bg-linear-to-b from-white/95 to-transparent"></div>
+        </div>
+        <div class="absolute h-32 w-screen overflow-hidden bottom-0">
+            <div class="absolute inset-0 bg-linear-to-t from-white/99 to-transparent"></div>
+        </div>
+
+        <div class="relative flex flex-col px-6 md:px-72 py-20 md:py-40 text-black">
+            <div class="w-full md:w-1/2 space-y-3" data-aos="fade-up" data-aos-duration="2000">
+                <p class="font-[applegaramond] text-xl md:text-2xl text-left">Software Engineer</p>
+                <p class="font-[applegaramond] text-3xl md:text-5xl text-left">Building scalable applications and transforming ideas into seamless digital experiences.</p>
+            </div>
+            <div class="w-full md:w-1/3 md:ml-auto mt-10 md:mt-24" data-aos="fade-up" data-aos-delay="200" data-aos-duration="2000">
+                <p class="font-[applegaramond] text-md text-gray-500 md:text-black md:text-xl text-left">Hi, I'm Gaza Fathya Akhdan, a Software Engineer based in Bekasi, focused on building scalable applications, crafting seamless digital experiences, and developing solutions that solve real-world problems.</p>
+            </div>
+        </div>
+
+        <div class="px-6 md:px-72 text-gray-400 md:w-fit items-center flex flex-col gap-y-1 animate-bounce" data-aos="fade-up" data-aos-duration="3000">
+            <p class="font-sans text-md md:text-xl lowercase tracking-tight">Scroll To Discover</p>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="md:size-5 size-3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </div>
+    </header>
+
+    <main class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10 md:gap-y-16 px-6 md:px-30">
+
+        <div class="group cursor-pointer" data-aos="fade-up" data-aos-duration="1000">
+            <div class="overflow-hidden bg-blue-600 aspect-auto flex items-center justify-center transition-all duration-500 group-hover:brightness-110">
+                <img src="assets/img/project-1.png" alt="E-Gallery Website" class="rounded-md scale-110" />
+            </div>
+            <div class="mt-2 flex items-center justify-between gap-4">
+                <div>
+                    <p class="font-sans tracking-tight text-gray-400 font-light text-sm md:text-base">FINAL PROJECT - 2025</p>
+                    <p class="text-2xl md:text-3xl font-medium text-gray-800 font-[applegaramond]">E-Gallery Website</p>
+                </div>
+                <a href="https://github.com/Akhdann5/vargazs-public" class="shrink-0 flex gap-2 items-center text-white bg-gray-400 px-3 py-2 cursor-pointer hover:bg-gray-500 transition duration-150">
+                    <p class="font-sans tracking-tight text-sm">View project</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 hover:rotate-45 transition duration-200">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="group cursor-pointer" data-aos="fade-up" data-aos-duration="2000">
+            <div class="overflow-hidden bg-blue-600 aspect-auto flex items-center justify-center transition-all duration-500 group-hover:brightness-110">
+                <img src="assets/img/project-2.png" alt="E-Commerce Website" class="rounded-md scale-110" />
+            </div>
+            <div class="mt-2 flex items-center justify-between gap-4">
+                <div>
+                    <p class="font-sans tracking-tight text-gray-400 font-light text-sm md:text-base">FIRST PROJECT - 2025</p>
+                    <p class="text-2xl md:text-3xl font-medium text-gray-800 font-[applegaramond]">E-Commerce Website</p>
+                </div>
+                <a href="https://github.com/Akhdann5/e-commerce-public" class="shrink-0 flex gap-2 items-center text-white bg-gray-400 px-3 py-2 cursor-pointer hover:bg-gray-500 transition duration-150">
+                    <p class="font-sans tracking-tight text-sm">View project</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 hover:rotate-45 transition duration-200">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="group cursor-pointer" data-aos="fade-up" data-aos-duration="1000">
+            <div class="overflow-hidden bg-blue-600 aspect-auto flex items-center justify-center transition-all duration-500 group-hover:brightness-110">
+                <img src="assets/img/project-3.png" alt="E-Library Website" class="rounded-md scale-110" />
+            </div>
+            <div class="mt-2 flex items-center justify-between gap-4">
+                <div>
+                    <p class="font-sans tracking-tight text-gray-400 font-light text-sm md:text-base">SECOND PROJECT - 2025</p>
+                    <p class="text-2xl md:text-3xl font-medium text-gray-800 font-[applegaramond]">E-Library Website</p>
+                </div>
+                <a href="https://github.com/Akhdann5/e-library-public" class="shrink-0 flex gap-2 items-center text-white bg-gray-400 px-3 py-2 cursor-pointer hover:bg-gray-500 transition duration-150">
+                    <p class="font-sans tracking-tight text-sm">View project</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 hover:rotate-45 transition duration-200">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="group cursor-pointer" data-aos="fade-up" data-aos-duration="2000">
+            <div class="overflow-hidden bg-blue-600 aspect-auto flex items-center justify-center transition-all duration-500 group-hover:brightness-110">
+                <img src="assets/img/project-4.png" alt="Lokal Mart Website" class="rounded-md scale-110" />
+            </div>
+            <div class="mt-2 flex items-center justify-between gap-4">
+                <div>
+                    <p class="font-sans tracking-tight text-gray-400 font-light text-sm md:text-base">TECHSOFT - 2026</p>
+                    <p class="text-2xl md:text-3xl font-medium text-gray-800 font-[applegaramond]">Lokal Mart Website</p>
+                </div>
+                <a href="https://github.com/Akhdann5/lokalamart" class="shrink-0 flex gap-2 items-center text-white bg-gray-400 px-3 py-2 cursor-pointer hover:bg-gray-500 transition duration-150">
+                    <p class="font-sans tracking-tight text-sm">View project</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 hover:rotate-45 transition duration-200">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="group cursor-pointer" data-aos="fade-up" data-aos-duration="1000">
+            <div class="overflow-hidden bg-blue-600 aspect-auto flex items-center justify-center transition-all duration-500 group-hover:brightness-110">
+                <img src="assets/img/project-5.png" alt="Management PT DBJ Website" class="rounded-md scale-110" />
+            </div>
+            <div class="mt-2 flex items-center justify-between gap-4">
+                <div>
+                    <p class="font-sans tracking-tight text-gray-400 font-light text-sm md:text-base">UJIKOM - 2025</p>
+                    <p class="text-2xl md:text-3xl font-medium text-gray-800 font-[applegaramond]">Management PT DBJ Website</p>
+                </div>
+                <a href="https://github.com/Tim-Three/web-management-pt-dbj" class="shrink-0 flex gap-2 items-center text-white bg-gray-400 px-3 py-2 cursor-pointer hover:bg-gray-500 transition duration-150">
+                    <p class="font-sans tracking-tight text-sm">View project</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 hover:rotate-45 transition duration-200">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="group cursor-pointer" data-aos="fade-up" data-aos-duration="2000">
+            <div class="overflow-hidden bg-blue-600 aspect-auto flex items-center justify-center transition-all duration-500 group-hover:brightness-110">
+                <img src="assets/img/project-6.png" alt="UI/UX E-Learning Website" class="rounded-md scale-110" />
+            </div>
+            <div class="mt-2 flex items-center justify-between gap-4">
+                <div>
+                    <p class="font-sans tracking-tight text-gray-400 font-light text-sm md:text-base">3rd Place at FUSE - 2026</p>
+                    <p class="text-2xl md:text-3xl font-medium text-gray-800 font-[applegaramond]">UI/UX E-Learning Website</p>
+                </div>
+                <a href="" class="shrink-0 flex gap-2 items-center text-white bg-gray-400 px-3 py-2 cursor-pointer hover:bg-gray-500 transition duration-150">
+                    <p class="font-sans tracking-tight text-sm">View project</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 hover:rotate-45 transition duration-200">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="px-6 md:px-30 py-8 w-full bg-white mt-12 md:mt-16">
+        <div class="flex justify-between font-medium h-fit items-center">
+            <p class="text-gray-800 font-sans text-xl">© 2026.</p>
+            <a href="#home" class="flex items-center gap-3 md:gap-5 font-sans text-sm md:text-md text-gray-800">
+                BACK TO TOP
+                <div class="px-3.5 py-4 md:px-4.5 md:py-5 flex justify-center bg-gray-800 rounded-full text-white text-lg md:text-xl hover:bg-gray-400 transition duration-200">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="font-medium h-fit mt-20 md:mt-40 overflow-hidden">
+            <p class="text-gray-800 font-sans text-base md:text-xl mt-4 lowercase tracking-tight">Excited to connect and collaborate!</p>
+            <h1 class="font-[applegaramond] text-gray-300 whitespace-nowrap leading-none"
+                style="font-size: clamp(3rem, 14.5vw, 25rem); letter-spacing: 0.04em;">LET'S TALK</h1>
+        </div>
+
+        <div class="footer-bottom flex justify-between mt-10 md:mt-24 mb-10">
+            <div class="footer-social flex gap-4 md:w-1/5 md:justify-between">
+                <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/Akhdann5" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://wa.me/6281298104127" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="footer-credit font-medium h-fit md:mt-10">
+                <p class="text-sm md:text-md font-sans tracking-tight text-gray-800"><span class="text-gray-400">designed and developed by</span> Gaza Fathya Akhdan</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // Hamburger toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+            document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+        });
+
+        // Close menu when a link is clicked
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+    </script>
+</body>
+</html>

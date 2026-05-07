@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaza Fathya Akhdan</title>
+    <link rel="icon" href="../assets/img/scnd-logo.png" type="image/png">
+    <link href="../src/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ── Mobile overlay menu ── */
+        #mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            z-index: 50;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-12px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        #mobile-menu.open {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+        #mobile-menu .menu-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #mobile-menu .menu-top img { width: 3rem; }
+        #menu-close {
+            background: none;
+            border: 1.5px solid #1f2937;
+            cursor: pointer;
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s, color 0.2s;
+        }
+        #menu-close:hover { background: #1f2937; color: white; }
+        #menu-close svg { width: 1rem; height: 1rem; stroke: currentColor; stroke-width: 2; }
+        #mobile-menu nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            flex: 1;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+        #mobile-menu nav a {
+            font-family: 'applegaramond', Georgia, serif;
+            font-size: clamp(2.8rem, 12vw, 5rem);
+            font-weight: 400;
+            color: #1f2937;
+            text-decoration: none;
+            line-height: 1.15;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0.6rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: color 0.2s, padding-left 0.2s;
+        }
+        #mobile-menu nav a:first-child { border-top: 1px solid #e5e7eb; }
+        #mobile-menu nav a:hover { color: #9ca3af; padding-left: 0.5rem; }
+        #mobile-menu nav a .arrow {
+            font-size: 1.2rem;
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        #mobile-menu nav a:hover .arrow { opacity: 1; transform: translateX(0); }
+        #mobile-menu .menu-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        #mobile-menu .menu-bottom .socials { display: flex; gap: 0.75rem; }
+        #mobile-menu .menu-bottom .socials a {
+            width: 2.4rem;
+            height: 2.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1.5px solid #1f2937;
+            color: #1f2937;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+        #mobile-menu .menu-bottom .socials a:hover { background: #1f2937; color: white; }
+        #mobile-menu .menu-bottom .label {
+            font-family: sans-serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            color: #9ca3af;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* ── Hamburger ── */
+        #hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 60;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+        #hamburger span {
+            display: block;
+            width: 22px;
+            height: 1.5px;
+            background: black;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        @media (max-width: 767px) {
+            #hamburger { display: flex; }
+        }
+
+        /* ── Footer responsive ── */
+        @media (max-width: 767px) {
+            .footer-social { width: auto !important; gap: 1rem; }
+            .footer-bottom { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+            .footer-credit { margin-top: 0 !important; }
+
+            /* Teaching / Achievements timeline fix */
+            .timeline-row {
+                grid-template-columns: 1fr !important;
+                gap: 0.5rem 0 !important;
+            }
+            .timeline-date { font-size: 0.75rem; }
+            .timeline-dot-col { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <!-- NAV -->
+    <nav class="flex items-center justify-between px-6 md:px-30 py-8 w-full bg-white relative z-40" id="home">
+        <div>
+            <img src="../assets/img/logo.png" alt="Logo" class="w-14">
+        </div>
+        <div class="hidden md:flex space-x-6 font-sans font-light text-xl tracking-tight">
+            <a href="../index.html" class="text-black hover:text-gray-500 transition">home</a>
+            <a href="about.html" class="text-black border-b-2 border-black hover:text-gray-500 hover:border-gray-500 transition">about</a>
+            <a href="work.html" class="text-black hover:text-gray-500 transition">work</a>
+            <a href="contact.html" class="text-black hover:text-gray-500 transition">contact</a>
+            <a href="https://instagram.com/gf.akhdan" target="_blank" rel="noopener noreferrer" class="text-black hover:text-gray-500 transition"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank" rel="noopener noreferrer" class="text-black hover:text-gray-500 transition"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+        <button id="hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu">
+        <div class="menu-top">
+            <img src="../assets/img/logo.png" alt="Logo">
+            <button id="menu-close" aria-label="Close menu">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav>
+            <a href="../index.html">home <span class="arrow">→</span></a>
+            <a href="about.html">about <span class="arrow">→</span></a>
+            <a href="work.html">work <span class="arrow">→</span></a>
+            <a href="contact.html">contact <span class="arrow">→</span></a>
+        </nav>
+        <div class="menu-bottom">
+            <div class="socials">
+                <a href="https://instagram.com/gf.akhdan" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+            <span class="label">© 2026 Gaza Fathya Akhdan</span>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="relative overflow-hidden mb-12 md:mb-20">
+        <video id="bg-video" class="absolute inset-0 w-full h-full object-cover brightness-105" autoplay muted loop playsinline>
+            <source src="../assets/video/videobg-1.mp4" type="video/mp4">
+        </video>
+        <div class="absolute h-32 w-screen overflow-hidden">
+            <div class="absolute inset-0 bg-linear-to-b from-white/95 to-transparent"></div>
+        </div>
+        <div class="absolute h-32 w-screen overflow-hidden bottom-0">
+            <div class="absolute inset-0 bg-linear-to-t from-white/99 to-transparent"></div>
+        </div>
+
+        <div class="relative flex flex-col px-6 md:px-72 py-20 md:py-44 text-black">
+            <div class="w-full md:w-1/2 space-y-3" data-aos="fade-up" data-aos-duration="2000">
+                <p class="font-[applegaramond] text-xl md:text-2xl text-left">Software Engineer</p>
+                <p class="font-[applegaramond] text-3xl md:text-5xl text-left">If you're reading this, you can call me Akhdan.</p>
+            </div>
+
+            <div class="w-full md:w-1/2 md:ml-auto mt-10 md:mt-0 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-30 font-sans tracking-tight font-light items-start md:items-center" data-aos="fade-up" data-aos-delay="200" data-aos-duration="2000">
+                <p class="hidden md:block"></p>
+                <p class="text-gray-700 leading-relaxed text-base md:text-base">I'm Gaza Fathya Akhdan, a Fullstack Developer and UI/UX Designer with a passion for building clean, user-centered digital experiences.</p>
+                <p class="text-gray-700 leading-relaxed text-base md:text-base">My work spans from responsive web applications to visual design — ranging from e-commerce platforms to company profile websites and news applications.</p>
+                <p class="text-gray-700 leading-relaxed text-base md:text-base">Currently based in Bekasi, Indonesia. When I'm not coding or designing, I enjoy sharing knowledge by teaching other students across Jakarta and West Java.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- TEACHING EXPERIENCE -->
+    <section class="px-6 md:px-72 py-10 md:py-20">
+        <div class="flex justify-between items-center mb-10 md:mb-16" data-aos="fade-up" data-aos-duration="2000">
+            <h2 class="font-[applegaramond] font-light text-3xl md:text-5xl tracking-tight">Teaching Experience</h2>
+        </div>
+
+        <!-- SMAN 17 Bekasi -->
+        <div class="timeline-row grid border-t border-gray-200 py-8 md:py-12" style="grid-template-columns: 160px 40px 1fr; gap: 0 24px;" data-aos="fade-up" data-aos-duration="2000">
+            <p class="timeline-date font-sans font-light text-gray-500 text-sm pt-1">Feb 2026</p>
+            <div class="timeline-dot-col flex justify-center pt-1">
+                <div class="w-7 h-7 rounded-full border-2 border-blue-500 flex items-center justify-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                </div>
+            </div>
+            <div>
+                <p class="font-sans font-medium text-base md:text-lg text-gray-900 mb-1">SMAN 17 Bekasi, Bekasi</p>
+                <p class="font-sans font-light text-xs md:text-sm text-gray-400 mb-3 md:mb-4">HTML Structure & Elements</p>
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-sm md:text-base">Introduced senior high school students to the fundamentals of HTML, covering document structure, semantic tags, and how browsers interpret markup. The session focused on hands-on practice to help students build their first simple web pages from scratch.</p>
+            </div>
+        </div>
+
+        <!-- SMPN 212 -->
+        <div class="timeline-row grid border-t border-gray-200 py-8 md:py-12" style="grid-template-columns: 160px 40px 1fr; gap: 0 24px;" data-aos="fade-up" data-aos-duration="2000">
+            <p class="timeline-date font-sans font-light text-gray-500 text-sm pt-1">Oct 2025</p>
+            <div class="timeline-dot-col flex justify-center pt-1">
+                <div class="w-7 h-7 rounded-full border-2 border-blue-500 flex items-center justify-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-blue-500"></div>
+                </div>
+            </div>
+            <div>
+                <p class="font-sans font-medium text-base md:text-lg text-gray-900 mb-1">SMPN 212 Jakarta, East Jakarta</p>
+                <p class="font-sans font-light text-xs md:text-sm text-gray-400 mb-3 md:mb-4">HTML Structure & Elements</p>
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-sm md:text-base">Introduced junior high school students to the fundamentals of HTML, covering document structure, semantic tags, and how browsers interpret markup. The session focused on hands-on practice to help students build their first simple web pages from scratch.</p>
+            </div>
+        </div>
+
+        <!-- SMK 01 Cianjur -->
+        <div class="timeline-row grid border-t border-gray-200 py-8 md:py-12" style="grid-template-columns: 160px 40px 1fr; gap: 0 24px;" data-aos="fade-up" data-aos-duration="2000">
+            <p class="timeline-date font-sans font-light text-gray-500 text-sm pt-1">Aug 2025</p>
+            <div class="timeline-dot-col flex justify-center pt-1">
+                <div class="w-7 h-7 rounded-full border-2 border-green-500 flex items-center justify-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+            </div>
+            <div>
+                <p class="font-sans font-medium text-base md:text-lg text-gray-900 mb-1">SMK 01 Cianjur, Cianjur</p>
+                <p class="font-sans font-light text-xs md:text-sm text-gray-400 mb-3 md:mb-4">UI/UX Design Principles</p>
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-sm md:text-base">Taught foundational UI/UX principles including layout composition, color theory, and user-centered design thinking. Students learned how to approach design problems for both web and mobile applications, with practical exercises using real design tools.</p>
+            </div>
+        </div>
+
+        <!-- SMAN 44 -->
+        <div class="timeline-row grid border-t border-gray-200 py-8 md:py-12" style="grid-template-columns: 160px 40px 1fr; gap: 0 24px;" data-aos="fade-up" data-aos-duration="2000">
+            <p class="timeline-date font-sans font-light text-gray-500 text-sm pt-1">Feb 2025</p>
+            <div class="timeline-dot-col flex justify-center pt-1">
+                <div class="w-7 h-7 rounded-full border-2 border-green-500 flex items-center justify-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                </div>
+            </div>
+            <div>
+                <p class="font-sans font-medium text-base md:text-lg text-gray-900 mb-1">SMAN 44 Jakarta, East Jakarta</p>
+                <p class="font-sans font-light text-xs md:text-sm text-gray-400 mb-3 md:mb-4">Basic JavaScript for Beginners</p>
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-sm md:text-base">Introduced high school students to JavaScript fundamentals including variables, functions, and DOM manipulation. The session was designed to be beginner-friendly, bridging the gap between static HTML and interactive web experiences.</p>
+            </div>
+        </div>
+
+        <!-- SMPN 284 -->
+        <div class="timeline-row grid border-t border-b border-gray-200 py-8 md:py-12" style="grid-template-columns: 160px 40px 1fr; gap: 0 24px;" data-aos="fade-up" data-aos-duration="2000">
+            <p class="timeline-date font-sans font-light text-gray-500 text-sm pt-1">Nov 2024</p>
+            <div class="timeline-dot-col flex justify-center pt-1">
+                <div class="w-7 h-7 rounded-full border-2 border-gray-400 flex items-center justify-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-gray-400"></div>
+                </div>
+            </div>
+            <div>
+                <p class="font-sans font-medium text-base md:text-lg text-gray-900 mb-1">SMPN 284 Jakarta, East Jakarta</p>
+                <p class="font-sans font-light text-xs md:text-sm text-gray-400 mb-3 md:mb-4">Basic Design Concepts</p>
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-sm md:text-base">Delivered an introduction to digital design concepts for junior high school students, covering visual hierarchy, typography, and the basics of design tools. The session aimed to spark interest in creative technology among students at an early age.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="px-6 md:px-72 py-10 md:py-20" data-aos="fade-up" data-aos-duration="2000">
+        <div class="flex justify-between items-center mb-10 md:mb-16">
+            <h2 class="font-[applegaramond] font-light text-3xl md:text-5xl tracking-tight">Achievements</h2>
+            <a href="../assets/doc/CV_Gaza Fathya Akhdan_Software Developer.pdf" target="_blank"
+               class="font-sans font-light text-xs md:text-sm border border-gray-800 rounded-full px-4 md:px-6 py-2 hover:bg-gray-800 hover:text-white transition duration-200 whitespace-nowrap">
+                Download CV
+            </a>
+        </div>
+
+        <!-- 1st Place -->
+        <div class="timeline-row grid border-t border-gray-200 py-8 md:py-12" style="grid-template-columns: 160px 40px 1fr; gap: 0 24px;" data-aos="fade-up" data-aos-duration="2000">
+            <p class="timeline-date font-sans font-light text-gray-500 text-sm pt-1">2025</p>
+            <div class="timeline-dot-col flex justify-center pt-1">
+                <div class="w-7 h-7 rounded-full border-2 border-amber-400 flex items-center justify-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+                </div>
+            </div>
+            <div>
+                <span class="inline-block text-xs font-medium bg-amber-100 text-amber-800 rounded-full px-3 py-1 mb-3">1st Place</span>
+                <p class="font-sans font-medium text-base md:text-lg text-gray-900 mb-1">Website Development Competition — IDN Boarding School</p>
+                <p class="font-sans font-light text-xs md:text-sm text-gray-400 mb-3 md:mb-4">Internal School Competition</p>
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-sm md:text-base">Won first place by building a car rental management website for IDN Boarding School. The project featured a complete booking system, vehicle listing, and admin dashboard — demonstrating full-stack development skills from database design to a clean, functional user interface.</p>
+            </div>
+        </div>
+
+        <!-- 2nd Place -->
+        <div class="timeline-row grid border-t border-gray-200 py-8 md:py-12" style="grid-template-columns: 160px 40px 1fr; gap: 0 24px;" data-aos="fade-up" data-aos-duration="2000">
+            <p class="timeline-date font-sans font-light text-gray-500 text-sm pt-1">2025</p>
+            <div class="timeline-dot-col flex justify-center pt-1">
+                <div class="w-7 h-7 rounded-full border-2 border-gray-400 flex items-center justify-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-gray-400"></div>
+                </div>
+            </div>
+            <div>
+                <span class="inline-block text-xs font-medium bg-gray-100 text-gray-700 rounded-full px-3 py-1 mb-3">2nd Place</span>
+                <p class="font-sans font-medium text-base md:text-lg text-gray-900 mb-1">Website Development Competition — IDN Boarding School</p>
+                <p class="font-sans font-light text-xs md:text-sm text-gray-400 mb-3 md:mb-4">Internal School Competition</p>
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-sm md:text-base">Secured second place by designing and developing a mosque landing page. The website highlighted the mosque's programs, schedules, and community activities with a clean visual layout and a strong focus on accessibility and readability for all visitors.</p>
+            </div>
+        </div>
+
+        <!-- 3rd Place -->
+        <div class="timeline-row grid border-t border-b border-gray-200 py-8 md:py-12" style="grid-template-columns: 160px 40px 1fr; gap: 0 24px;" data-aos="fade-up" data-aos-duration="2000">
+            <p class="timeline-date font-sans font-light text-gray-500 text-sm pt-1">2026</p>
+            <div class="timeline-dot-col flex justify-center pt-1">
+                <div class="w-7 h-7 rounded-full border-2 border-orange-700 flex items-center justify-center">
+                    <div class="w-2.5 h-2.5 rounded-full bg-orange-700"></div>
+                </div>
+            </div>
+            <div>
+                <span class="inline-block text-xs font-medium bg-orange-50 text-orange-800 rounded-full px-3 py-1 mb-3">3rd Place</span>
+                <p class="font-sans font-medium text-base md:text-lg text-gray-900 mb-1">UI/UX Design Competition — FUSE 2026</p>
+                <p class="font-sans font-light text-xs md:text-sm text-gray-400 mb-3 md:mb-4">National Level Competition</p>
+                <p class="font-sans font-light text-gray-700 leading-relaxed text-sm md:text-base">Achieved third place at FUSE 2026, a national-level UI/UX design competition. I designed an E-Learning website with a focus on intuitive navigation and an engaging visual experience, competing against talented designers from across Indonesia.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="px-6 md:px-30 py-8 w-full bg-white mt-12 md:mt-16">
+        <div class="flex justify-between font-medium h-fit items-center">
+            <p class="text-gray-800 font-sans text-xl">© 2026.</p>
+            <a href="#home" class="flex items-center gap-3 md:gap-5 font-sans text-sm md:text-md text-gray-800">
+                BACK TO TOP
+                <div class="px-3.5 py-4 md:px-4.5 md:py-5 flex justify-center bg-gray-800 rounded-full text-white text-lg md:text-xl hover:bg-gray-400 transition duration-200">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </div>
+            </a>
+        </div>
+
+        <div class="font-medium h-fit mt-20 md:mt-40 overflow-hidden">
+            <p class="text-gray-800 font-sans text-base md:text-xl mt-4 lowercase tracking-tight">Excited to connect and collaborate!</p>
+            <h1 class="font-[applegaramond] text-gray-300 whitespace-nowrap leading-none"
+                style="font-size: clamp(3rem, 14.5vw, 25rem); letter-spacing: 0.04em;">LET'S TALK</h1>
+        </div>
+
+        <div class="footer-bottom flex justify-between mt-10 md:mt-24 mb-10">
+            <div class="footer-social flex gap-4 md:w-1/5 md:justify-between">
+                <a href="https://www.linkedin.com/in/gfakhdan/" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/Akhdann5" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://wa.me/6281298104127" target="_blank" class="px-3 py-2 md:px-4 md:py-2.5 flex items-center justify-center rounded-full text-gray-800 border-2 border-gray-800 text-xl hover:bg-gray-800 hover:text-white transition duration-200">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+            <div class="footer-credit font-medium h-fit md:mt-10">
+                <p class="text-sm md:text-md font-sans tracking-tight text-gray-800"><span class="text-gray-400">designed and developed by</span> Gaza Fathya Akhdan</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuClose = document.getElementById('menu-close');
+
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        mobileMenu.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    </script>
+</body>
+</html>
